@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [[ ! $1 =~ ^[0-9]+$ ]]; then
+    echo "Missing number of story"
+    exit 1
+fi
+
+brancheref="master"
+if [[ $2 =~ ^[0-9]+$ ]]; then
+    brancheref="NUMERIQUE-$2"
+fi
+
+cd ~/wks/src/Hub
+git checkout "$brancheref"
+git pull --rebase origin "$brancheref"
+git checkout NUMERIQUE-"$1"
+git pull --rebase origin NUMERIQUE-"$1"
+git merge "$brancheref"
+git push origin NUMERIQUE-"$1"

@@ -1,0 +1,12 @@
+alias ll='ls -la'
+alias cls='clear'
+alias posc-go-wks='cd ~/wks/src/Hub'
+alias posc-go-ssh='cd ~/.ssh'
+alias posc-go-conf='cd ~/wks/local'
+alias posc-show-sshconf='less ~/.ssh/config'
+
+alias devgate-go='ssh devgate'
+alias devgate-tunnel='ssh -f devgate_tunnel -N'
+alias posc-build-gulp='cd ~/wks/src/Hub/dashboards/dashboards-web-mvc; gulp build --production'
+alias posc-build-gulp-all='cd ~/wks/src/Hub/dashboards/dashboards-web-mvc; npm install; gulp build --production'
+alias 'eclipse=/usr/local/eclipse/eclipse'

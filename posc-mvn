@@ -1,0 +1,44 @@
+#!/bin/bash
+
+wks="/home/ineumann/wks/src/Hub/"
+
+if [[ $# -lt 1 ]]; then
+    echo "Missing parameter : project name (cmn|db|med|bc)"
+    exit 1
+fi
+
+module="$1"
+declare -a modules
+modules=("med" "cmn" "db" "bc")
+
+valid="0"
+for i in "${modules[@]}"; do
+    if [[ $i == $module ]]; then
+        valid="1"
+    fi
+done
+
+if (( "$valid" == 0 )); then
+   echo "Invalid parameter : project name (cmd|db|med|bc)"
+   exit 1
+fi
+
+cd "$wks"/commons
+mvn clean install
+
+if [[ $module == "bc" ]]; then
+   cd "$wks"/datastore
+   mvn clean install
+fi
+
+if [[ $module == "db" ]]; then
+   cd "$wks"/datastore
+   mvn clean install -Dmaven.test.skip=true
+   cd "$wks"/dashboards
+   mvn clean install
+fi
+
+if [[ $module == "med" ]]; then
+   cd "$wks"/mediation
+   mvn clean install
+fi
