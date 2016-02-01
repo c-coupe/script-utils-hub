@@ -3,13 +3,13 @@
 wks="/home/ineumann/wks/src/Hub/"
 
 if [[ $# -lt 1 ]]; then
-    echo "Missing parameter : project name (cmn|db|med|bc)"
+    echo "Missing parameter : project name (cmn|db|med|bc|tf)"
     exit 1
 fi
 
 module="$1"
 declare -a modules
-modules=("med" "cmn" "db" "bc")
+modules=("med" "cmn" "db" "bc" "tf")
 
 valid="0"
 for i in "${modules[@]}"; do
@@ -19,12 +19,14 @@ for i in "${modules[@]}"; do
 done
 
 if (( "$valid" == 0 )); then
-   echo "Invalid parameter : project name (cmd|db|med|bc)"
+   echo "Invalid parameter : project name (cmd|db|med|bc|tf)"
    exit 1
 fi
 
-cd "$wks"/commons
-mvn clean install
+if [[ $module != "tf" ]]; then
+    cd "$wks"/commons
+    mvn clean install
+fi
 
 if [[ $module == "bc" ]]; then
    cd "$wks"/datastore
@@ -41,4 +43,9 @@ fi
 if [[ $module == "med" ]]; then
    cd "$wks"/mediation
    mvn clean install
+fi
+
+if [[ $module == "tf" ]]; then
+   cd "$wks"/tools/perf
+   mvn clean install -e gatling:execute -Djsse.enableSNIExtension=false -Dprofile=DEV -Dproxy=false
 fi
