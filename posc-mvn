@@ -1,6 +1,6 @@
 #!/bin/bash
 
-wks="/home/ineumann/wks/src/Hub/"
+wks="~/wks/src/Hub/"
 
 if [[ $# -lt 1 ]]; then
     echo "Missing parameter : project name (cmn|db|med|bc|tf)"
